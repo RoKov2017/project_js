@@ -24,23 +24,30 @@ const movieDB = {
     ]
 };
 
-//1
-const reclama = document.querySelectorAll('.promo__adv img');
+const adv = document.querySelectorAll('.promo__adv img'),
+		poster = document.querySelector('.promo__bg'),
+		genre = poster.querySelector('.promo__genre'),
+		movieList = document.querySelector('.promo__interactive-list');
 
-for (let i = 0; i < reclama.length; i++) {
-	reclama[i].remove();
-}
+adv.forEach((item) => {
+	item.remove();
+});
 
-//2
-document.querySelector(".promo__genre").textContent = "Драма";
 
-//3
-document.querySelector(".promo__bg").style.cssText = 'background-image: url("./img/bg.jpg")';
+genre.textContent = "Драма";
 
-//4
-const  arr = movieDB.movies.sort();
-const myList = document.querySelectorAll('.promo__interactive-list .promo__interactive-item');
-for (let i = 0; i < myList.length; i++) {
-	myList[i].textContent = `${i + 1}. ${arr[i]}`;
 
-}
+poster.style.backgroundImage = 'url("img/bg.jpg")';
+
+
+movieList.innerHTML = '';
+
+movieDB.movies.sort();
+
+movieDB.movies.forEach((film, i)=>{
+	movieList.innerHTML += `
+		<li class="promo__interactive-item">${i + 1} ${film}
+			<div class="delete"></div>
+		</li>
+	`;
+});
