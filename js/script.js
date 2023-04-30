@@ -24,3 +24,23 @@ const movieDB = {
     ]
 };
 
+//1
+const reclama = document.querySelectorAll('.promo__adv img');
+
+for (let i = 0; i < reclama.length; i++) {
+	reclama[i].remove();
+}
+
+//2
+document.querySelector(".promo__genre").textContent = "Драма";
+
+//3
+document.querySelector(".promo__bg").style.cssText = 'background-image: url("./img/bg.jpg")';
+
+//4
+const  arr = movieDB.movies.sort();
+const myList = document.querySelectorAll('.promo__interactive-list .promo__interactive-item');
+for (let i = 0; i < myList.length; i++) {
+	myList[i].textContent = `${i + 1}. ${arr[i]}`;
+
+}
