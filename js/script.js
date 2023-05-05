@@ -142,5 +142,20 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 
+		//Открытие модального окна через заданный промежуток
+
+		const modalTimerId = setTimeout(openModal, 5000);
+
+
+		//Открывать модальное окно когда пользователь проскроллил до конца страницы
+	
+		function showModalByScroll() {
+			if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+				openModal();
+				window.removeEventListener('scroll', showModalByScroll);		//удаляем событие, чтобы оно выполнилось только один раз
+			}
+		}
+	
+		window.addEventListener('scroll', showModalByScroll);
 
 });
