@@ -44,7 +44,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	//Timer
 
-	const deadline = '2023-05-11';
+	const deadline = '2023-06-11';
 
 	function getTimeRemaining(endtime) {
 			const t = Date.parse(endtime) - Date.parse(new Date()); // разница между текущей датой и конечно в милисекундах 
@@ -232,5 +232,54 @@ window.addEventListener('DOMContentLoaded', () => {
 			'.menu .container',
 			'menu__item'
 		).render();
+
+		
+		//Forms
+
+		const forms = document.querySelectorAll('form');
+
+		const message = {
+			loading: 'Загрузка',
+			success: 'Спасибо, скоро с Вами свяжемся',
+			failure: 'Что-то пошло не так...'
+		};
+
+		forms.forEach(item => {
+			postData(item);
+		});
+
+		function postData(form) {
+			form.addEventListener('submit', (e) => {
+				e.preventDefault();
+
+				const statusMassege = document.createElement('div');
+				statusMassege.classList.add('status');
+				statusMassege.textContent = message.loading;
+				form.append(statusMassege);
+
+				const request = new XMLHttpRequest();
+				request.open('POST', 'server.php');
+
+				//request.setRequestHeader('Content-type', 'multipart/form-data');			не испльзуется заголовок
+				const formData = new FormData(form);
+
+				request.send(formData);
+
+				request.addEventListener('load', () => {
+					if (request.status === 200) {
+						console.log(request.response);
+						statusMassege.textContent = message.success;
+
+						form.reset();			//чистим форму
+						setTimeout(() => {
+							statusMassege.remove();
+						}, 2000);
+					} else {
+						statusMassege.textContent = message.failure;
+					}
+				});
+				 			
+			});
+		}
 
 });
